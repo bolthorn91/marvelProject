@@ -1,0 +1,59 @@
+<template>
+    <div>
+        <input type="text" placeholder="Introduce el nombre del superhéroe" v-model="superHero">
+        <div>este es un input del componente de navegación</div>
+        <button @click='getCharacter'>buscar superhéroe</button>
+
+        <ul>
+            <li v-for="data in datas">
+              <p>Este es: {{ data.results}}</p>  
+             
+            </li>
+        </ul>
+    </div>
+</template>
+
+
+
+ <script>
+
+ import axios from 'axios'
+
+ export default {
+    name: 'navigationmenu',
+    
+    data(){
+        return{
+    datas: {},
+    superHeroes: [],
+    superHero: '',
+    apiUrl: 'http://gateway.marvel.com/v1/public/comics',
+    apiKey: '?ts=1&apikey=1234&hash=ffd275c5130566a2916217b101f26150',
+                
+        }
+    },
+    methods:{
+
+        getCharacter() {
+            axios.get('https://gateway.marvel.com:443/v1/public/characters?name=Spider-Man&ts=1&apikey=5a702ea20b66329a0cb2239c34adec59&hash=f09d7c475639b2bb2e9a6ed4b5e3dea0')
+            .then(res => this.datas = res.data)
+        }
+
+            
+        }
+ }
+
+
+
+ </script>
+
+
+
+ <style scoped>
+
+    .button{
+        width: 200px;
+    }
+ 
+ </style>
+ 
