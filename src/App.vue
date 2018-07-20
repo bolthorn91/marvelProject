@@ -1,11 +1,9 @@
 <template>
 <div id="app">
   <nav class="menu"> 
-    <router-link to="/clientes">Clientes</router-link>
-    <router-link to="/campanas">Campañas</router-link>
-    <router-link to="/configurar">Configurar</router-link>
+      <navigationmenu></navigationmenu> 
+    <router-link to="/commits">commits</router-link>
   </nav>
-  <navigationmenu></navigationmenu> 
   
   <main>
     <router-view></router-view>
@@ -30,6 +28,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
