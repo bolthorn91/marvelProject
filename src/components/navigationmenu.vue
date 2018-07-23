@@ -11,8 +11,12 @@
             <li v-for="superhero in superHeroId">
               <p>Este es: {{superhero.id}}</p>  
             </li>
-                <p>{{id}}</p>
-                <p>{{commicsData}}</p>
+
+
+        <li v-for="comic in commicsData">    
+            {{comic.title}}
+
+        </li>
     
  
           
@@ -44,11 +48,6 @@
     },
 
     methods:{
-
-        /*getCharacterData(){
-            axios.get('https://gateway.marvel.com:443/v1/public/characters?name=' +this.superHero+'&ts=1&apikey=5a702ea20b66329a0cb2239c34adec59&hash=f09d7c475639b2bb2e9a6ed4b5e3dea0')
-            .then(res => this.superHeroId = res.data.data.results)
-        },*/
 
 
         getCharacterId: async function () {
