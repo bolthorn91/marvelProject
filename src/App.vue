@@ -1,27 +1,30 @@
 <template>
 <div id="app">
-  <nav class="menu"> 
-      <navigationmenu></navigationmenu> 
-    <router-link to="/commits">commits</router-link>
-  </nav>
-  
+
   <main>
-    <router-view></router-view>
+    <controller/>
   </main>
 </div>
 
 </template>
 
 <script>
-import navigationmenu from './components/navigationmenu'
+import controller from './components/controller'
 
 export default {
   name: 'App',
-  components: {navigationmenu}
+  components: {
+    controller
+  }
 }
 </script>
 
 <style>
+body, html{
+  margin:0;
+  padding:0;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
