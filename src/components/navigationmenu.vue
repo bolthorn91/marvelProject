@@ -1,26 +1,12 @@
 <template>
     <div>
-        <input type="text" placeholder="Introduce el nombre del superhéroe" v-model="superHero" @keyup.enter="getCharacterId"> 
-        
-            <router-link to="/comics">
-            <button @click='getCharacterId'>buscar superhéroe</button>
-             </router-link>
+     <div class="container">
+        <input type="text" placeholder="Introduce un superhéroe" v-model="superHero" @keyup.enter="$emit('trigger', superHero)"> 
 
-        <ul>
-            
-            <li v-for="superhero in superHeroId">
-              <p>Este es: {{superhero.id}}</p>  
-            </li>
+        <a> personajes</a>
+    </div>
 
-
-        <li v-for="comic in commicsData">    
-            {{comic.title}}
-
-        </li>
     
- 
-          
-        </ul>
 
     </div>
 </template>
@@ -47,26 +33,6 @@
         }
     },
 
-    methods:{
-
-
-        getCharacterId: async function () {
-            let getCharacterData = axios.get('https://gateway.marvel.com:443/v1/public/characters?name=' +this.superHero+this.andApiKey)
-            .then(res => this.superHeroId = res.data.data.results)
-                let dataArray = await getCharacterData;
- 
-                    for (let i = 0; i < dataArray.length; i++) {
-                        this.id = dataArray[i].id;
-                    }
-
-            let getCharacterComics = axios.get('https://gateway.marvel.com:443/v1/public/characters/' +this.id+'/comics'+this.apiKey)
-            .then(res => this.commicsData = res.data.data.results)
-
-            let commicsArray = await getCharacterComics
-
-        },
-
-    }
  }
 
 
@@ -76,13 +42,24 @@
 
 
  <style scoped>
-    
+    .container{
+        display: flex;
+        align-items: center;
+    }
     input{
-        width: 200px;
+        display: inline-block;
+        padding: 10px;
+        width: 90%;
+    }
+    a{
+        overflow: hidden;
+        display: inline-block;
+        width: 10%;
+        padding: 10px;
     }
 
     div{
-        background-color: aqua;
+        background-color: black
     }
  
  </style>

@@ -1,15 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import comics from '@/components/comics'
+import controller from '@/components/controller'
+import comic from '@/components/comic'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/comics',
-      name: 'comics',
-      component: comics
+      name: 'controller',
+      path: '/',
+      component: controller
+    },
+    {
+      name: 'comic',
+      path: '/comic/:id',
+      component: comic
     },
     
   ]
