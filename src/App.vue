@@ -1,4 +1,5 @@
 <template>
+
 <div id="app"> 
   <main>
   <router-view></router-view>
@@ -23,10 +24,12 @@ export default {
 body, html{
   margin:0;
   padding:0;
+  cursor: default;
 }
 
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans','Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

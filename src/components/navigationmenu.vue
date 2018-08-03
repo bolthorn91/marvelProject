@@ -1,9 +1,12 @@
 <template>
     <div>
      <div class="container">
-        <input type="text" placeholder="Introduce un superhéroe" v-model="superHero" @keyup.enter="$emit('trigger', superHero)"> 
+        <div class="header">olaqase</div>
 
+        <div class="input-container">
+        <input type="text" placeholder="Introduce un superhéroe" v-model="superHero" @keyup.enter="$emit('trigger', superHero)"> 
         <a> personajes</a>
+        </div>
     </div>
 
     
@@ -22,14 +25,7 @@
     
     data(){
         return{
-    id:'',        
-    superHeroData: [],
     superHero: '',
-    superHeroId:'',
-    commicsData:'',
-    apiUrl: 'http://gateway.marvel.com/v1/public/comics',
-    apiKey: '?ts=1&apikey=5a702ea20b66329a0cb2239c34adec59&hash=f09d7c475639b2bb2e9a6ed4b5e3dea0',
-    andApiKey: '&ts=1&apikey=5a702ea20b66329a0cb2239c34adec59&hash=f09d7c475639b2bb2e9a6ed4b5e3dea0',   
         }
     },
 
@@ -43,24 +39,36 @@
 
  <style scoped>
     .container{
+        background-color: black;
+        height: 50px;
+    }
+
+    .header{
+        background-color: red;
+    }
+
+    .input-container{
         display: flex;
         align-items: center;
     }
+
+
     input{
         display: inline-block;
         padding: 10px;
         width: 90%;
     }
+
+    
     a{
+        font-family: sans-serif;
+        color: white;
         overflow: hidden;
         display: inline-block;
         width: 10%;
         padding: 10px;
     }
 
-    div{
-        background-color: black
-    }
  
  </style>
  

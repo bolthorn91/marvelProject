@@ -1,15 +1,38 @@
 <template>
     <div class="container">
         <div class="left">
+            <router-link to='/'>
+            <a>Back</a>
+            </router-link>
             <h1>esto es izquierda</h1>
+
+            <div v-for="data in comicData">
+                <img :src="data.thumbnail.path+'/detail.jpg'" alt=""/>
+            </div>
+
         </div>
 
-        <div class="rigth" v-for="data in comicData">
-            <h1>{{data.title}}</h1>
-            <p>{{data.dates}}</p>
-            <p>{{data.creators}}</p>
-            <p>{{data.stories}}</p>
+        <div class="right">
+            <div v-for="data in comicData">
+                <div class="title">
+                    <h1>{{data.title}}</h1>
+                    <p>{{data.description}}</p>
+                </div>
+            <div>
+                <h2>creators</h2>
+                <p v-for="creators in data.creators.items">{{creators.name}}</p>
+            </div>
+            <div>
+                <h2>characters</h2>
+                <p v-for="characters in data.characters.items">{{characters.name}}</p>
+            </div>
+            <div>
+                <h2>Stories</h2>
+                <p v-for="stories in data.stories.items">{{stories.name}}</p>
+            </div>
 
+
+            </div>
         </div>
 
 
@@ -23,7 +46,7 @@ import axios from 'axios'
 
 export default {
     name:'comic',
-    props:['id', 'commicsData', 'apiUrl', 'andApiKey'],
+    props:['id', 'commicsData', 'apiUrl', 'andApiKey', 'img'],
 
     data(){
         return{
@@ -61,17 +84,28 @@ export default {
 
 
  <style>
-    .container{
-        position: fixed;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
+    h1, p{
+        margin:0;
     }
-    .right, left{
+    .container{
+        display: flex;
+        width:100%;
+
+    }
+    .title{
+        color: #fff;
+        background-color: black;
+    }
+    .right, .left{
         width: 50%;
     }
 
+
+    a.router-link{
+                border: 1px solid black;
+        padding: 10px;
+        
+    }
     
  </style>
  
