@@ -1,5 +1,5 @@
 <template>
-    <div>
+
      <div class="container">
         <div class="header">olaqase</div>
 
@@ -10,8 +10,6 @@
     </div>
 
     
-
-    </div>
 </template>
 
 
@@ -38,18 +36,16 @@
 
 
  <style scoped>
-    .container{
-        background-color: black;
-        height: 50px;
-    }
 
     .header{
         background-color: red;
     }
 
     .input-container{
+        background-color: black;
         display: flex;
         align-items: center;
+        
     }
 
 
@@ -57,6 +53,7 @@
         display: inline-block;
         padding: 10px;
         width: 90%;
+        height: 100%;
     }
 
     
@@ -66,6 +63,7 @@
         overflow: hidden;
         display: inline-block;
         width: 10%;
+        height: 100%;
         padding: 10px;
     }
 

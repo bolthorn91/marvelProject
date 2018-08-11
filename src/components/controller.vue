@@ -1,12 +1,14 @@
 <template>
   <div>
-        <navigationmenu  @trigger="getCharacterComics">
-        </navigationmenu>
+        <navigationmenu  @trigger="getCharacterComics"></navigationmenu>
+        
         <div class="comicsContainer">
-        <comics :comicsData="comicsData" :apiUrl="apiUrl" :apiKey="apiKey" :andApiKey="andApiKey" :id="id"/>
-        <button v-on:click="pagination"></button> {{page}}
+          <comics :comicsData="comicsData" :apiUrl="apiUrl" :apiKey="apiKey" :andApiKey="andApiKey" :id="id" :pages="pages" @triggerPagination="getComics"/>
         </div>
 
+        <div class="loading" v-bind:class="{ show: isLoading }">
+		        <span>comics are arriving!</span>
+	      </div>
   </div>
 </template>
 
@@ -23,11 +25,13 @@ export default {
 
   data() {
     return {
-      loading: false,
-      limit: 9,
-      //offset: comicsData.length /limit,
-      page: 0,
-      //pages: this.comicsData.lngth /this.limit,
+      message: '',
+      show: true,
+      isLoading: false,
+      queryLimit: '&limit=9',
+      queryOffset: '&offset=9',
+      totalPages: 0,
+      pages: [],
       id: "",
       thumbnail: [],
       superHeroData: [],
@@ -49,63 +53,83 @@ export default {
   methods: {
     
     getCharacterComics: async function(superHero) {
+      this.isLoading = true
       let getCharacterData = axios
         .get(
           "https://gateway.marvel.com/v1/public/characters?name=" +
             superHero +
             this.andApiKey
         )
-        .then(res => (this.superHeroData = res.data.data.results));
+        .then(res => (this.superHeroData = res.data.data.results))
+        .catch(err => (console.log(err)))
       let dataArray = await getCharacterData;
 
       for (let i = 0; i < dataArray.length; i++) {
         this.id = dataArray[i].id;
       }
+        
+      let getComics = axios.get("https://gateway.marvel.com/v1/public/characters/" +this.id +"/comics" +this.apiKey+this.queryLimit)
+        .then(res => (this.comicsData = res.data.data.results))
+        .catch(err => (console.log(err)))
+        let comicsArray = await getComics;
 
-      let getComics = axios.get("https://gateway.marvel.com/v1/public/characters/" +this.id +"/comics" +this.apiKey)
-        .then(res => (this.comicsData = res.data.data.results));
 
-      let comicsArray = await getComics;
+        const limit = 9
+        const maxComics = 90
+        this.totalPages = maxComics / limit
+        let i = 1
+          
+          while (i <= this.totalPages) {
+            this.pages.push(i);
+            i++
+        }
 
+        this.isLoading = false
+        
     },
+    //getComicsPag: async function (page){
 
-    getComics(){axios.get(
-          "https://gateway.marvel.com/v1/public/characters/" +
-            this.id +
-            "/comics" +
-            this.apiKey
-        )
-        .then(res => (this.comicsData = res.data.data.results));
-    },
+      getComics: function (page) {
+        this.isLoading = true
+        const limit = 9
+        const offset = limit * page
 
-
-    ready:async function(getCharacterComics) {
-    //this.loading = true;
-    await this.getCharacterComics
-    //this.loading = false;
-
-    },
-    pagination(comicsData){
-      const limit = 9
-      const dataSimulation = 40
-      const pages = dataSimulation / limit
-      console.log(pages)
-
-    }
-  },
-
-  created(){
-    axios.get('https://gateway.marvel.com/v1/public/comics'+this.apiKey)
-    .then(res => (this.comicsData = res.data.data.results));
-
+        axios.get("https://gateway.marvel.com/v1/public/characters/" +this.id +"/comics" +this.apiKey+this.queryLimit+'&offset='+offset)
+        .then(res => (this.comicsData = res.data.data.results))
+        .catch(err => (console.log(err)))
     
+        //let toto = await getComics
+        this.isLoading = false   
+    }
 
   },
-  watch: {
+
+    mounted: function(){
+        this.$nextTick(async function(getCharacterComics) {
+        this.loading = true;
+        await this.getCharacterComics
+        this.loading = false;
+      })
+    },
+
+    beforeCreate(){
+      this.isLoading = true
+  },
+
+    created(){
+        this.isLoading = true
+         let getComics = axios.get('https://gateway.marvel.com/v1/public/comics'+this.apiKey+this.queryLimit)
+        .then(res => (this.comicsData = res.data.data.results));
+        this.isLoading = false
+
+  },
+
+
+  /*watch: {
     '$route' (to, from) {
          this.getCharacterComics(this.superHero);
         }
-  }
+  }*/
 }
 
 </script>
@@ -113,6 +137,19 @@ export default {
 
 
  <style>
+.loading{
+	display: none;
+	position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+}
+.loading.show{
+	display: initial;
+}
+
   a{
     color: inherit;
     text-decoration: none;

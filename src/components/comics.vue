@@ -1,14 +1,24 @@
 <template>
     <div class="container">
+    <div class="comics-container">
 
-    <div class="comics-container" v-for="comic in comicsData" :comicsData='comicsData'>
+        <div class="comic-container" v-for="comic in comicsData" :comicsData='comicsData'>
             <router-link :to="{ name:'comic', params: { id:comic.id, img:comic.thumbnail.path+'/portrait_xlarge.jpg'}}" :apiKey="apiKey">  
-
             <img :src="comic.thumbnail.path+'/portrait_xlarge.jpg'"/>
+            </router-link>
             <p>{{comic.title}}</p>
 
-            </router-link>   
+               
+        </div>
     </div>
+
+        <div class="paginationContainer">
+            <a v-for="page in pages" @click="$emit('triggerPagination', page)">
+            {{page}}
+            </a> 
+        </div>
+        
+    
 
     </div>
 </template>
@@ -22,7 +32,7 @@
 
  export default {
     name: 'commics',
-    props:['id', 'superHeroData', 'comicsData', 'apiUrl', 'apiKey', 'andApiKey', 'imgPath'],
+    props:['id', 'superHeroData', 'comicsData', 'apiUrl', 'apiKey', 'andApiKey', 'imgPath', 'pages'],
     data(){
         return{
 
@@ -41,15 +51,21 @@
         overflow-x: hidden;
         padding:20px;
         min-height: 90vh;
+    }
+
+    .comics-container{
+
         display:grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr;
         grid-gap: 50px;
     }
 
-    .comics-container{
+    .comic-container{
         display: flex;
         justify-content: center;
+        align-items: center;
+        flex-direction: column;
 
     }
 
@@ -58,6 +74,25 @@
         
     }
 
+    .paginationContainer{
+
+    }
+
+    .paginationContainer a{
+        display: inline-block;
+        padding: 10px;
+        margin: 10px 10px 0 10px;
+        background-color: white; 
+        color: black; 
+        border: 2px solid #008CBA;
+        text-align: center;
+    }
+
+    .paginationContainer a:hover{
+        cursor: pointer;
+        background-color: #008CBA;
+        color: white;
+    }
     
  </style>
  
