@@ -1,7 +1,10 @@
 <template>
 
      <div class="container">
-        <div class="header">olaqase</div>
+        <div class="header">
+            <img src="../../static/marvelLogo.png" alt="marvel-Logo">
+
+        </div>
 
         <div class="input-container">
         <input type="text" placeholder="Introduce un superhéroe" v-model="superHero" @keyup.enter="$emit('trigger', superHero)"> 
@@ -38,7 +41,14 @@
  <style scoped>
 
     .header{
+        display: block;
+        width: 100%;
         background-color: red;
+    }
+
+    .header img{
+        top: 0;
+        left: 0;
     }
 
     .input-container{
