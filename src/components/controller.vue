@@ -81,17 +81,10 @@ export default {
         this.isLoading = false   
     },
 
-      /*getCharacterData(superHero){
-        axios.get("https://gateway.marvel.com/v1/public/characters?name=" +superHero +this.andApiKey)
-        .then(res => (this.superHeroData = res.data.data.results))
-        .catch(err => (console.log(err)))
-      },*/
-
 
       getComics(page) {
         const limit = 9
         const offset = limit * page
-        
 
         axios.get("https://gateway.marvel.com/v1/public/characters/" +this.id +"/comics" +this.apiKey+this.queryLimit+'&offset='+offset)
         .then(res => (this.comicsData = res.data.data.results))
@@ -101,31 +94,34 @@ export default {
 
   },
 
-    /*mounted: function(){
-        this.$nextTick(async function(getCharacterComics) {
-        this.loading = true;
-        await this.getCharacterComics
-        this.loading = false;
-      })
-    },*/
+    mounted() {
 
-
-    created(page){
-        this.isLoading = true
+    
+       this.isLoading = true
         const limit = 9
-        const offset = limit * page
-         let getComics = axios.get('https://gateway.marvel.com/v1/public/comics'+this.apiKey+this.queryLimit+'&offset='+offset)
-        .then(res => (this.comicsData = res.data.data.results));
-        this.isLoading = false
-
-  },
-
-
-  /*watch: {
-    '$route' (to, from) {
-         this.getCharacterComics(this.superHero);
+        const maxComics = 90
+        this.totalPages = maxComics / limit
+        let i = 1
+       
+        while (i <= this.totalPages) {
+          this.pages.push(i);
+            i++
         }
-  }*/
+
+        for (let i = 0; i < this.pages.length; i++) {
+          const page = this.pages[i];
+          const offset = limit * page 
+
+        }
+
+        //const offset = limit * page
+
+        this.getComics();
+        
+        this.isLoading = false
+      
+      },
+
 }
 
 </script>
